@@ -1,0 +1,32 @@
+dist/
+webDist/
+distWeb/
+distLambda/
+goldstackLocal/
+coverage/
+node_modules/
+.next/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.pnp.js
+*.json
+.yarn/
+
+
+# Database
+pgdata/
+
+# IDE
+.vscode/
+
+
+# Environment
+.env
+.env.development.local
+.env.local
+.env.test.local
+.env.production.local
+
+# Prisma
+src/generated/prisma

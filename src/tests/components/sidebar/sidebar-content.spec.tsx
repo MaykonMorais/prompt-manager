@@ -1,25 +1,68 @@
-import { SidebarContent } from '@/components/sidebar/sidebar-content';
+import {
+  SidebarContent,
+  SidebarContentProps,
+} from '@/components/sidebar/sidebar-content';
 import { screen, render } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
 
 const pushMock = jest.fn();
 
+const initialPrompts = [
+  {
+    id: '1',
+    title: 'Title 1',
+    content: 'Content 1',
+  },
+  {
+    id: '2',
+    title: 'Title 2',
+    content: 'Content 2',
+  },
+];
+
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }));
 
-const makeSut = () => {
-  return render(<SidebarContent />);
+const makeSut = (
+  { prompts = initialPrompts }: SidebarContentProps = {} as SidebarContentProps
+) => {
+  return render(<SidebarContent prompts={prompts} />);
 };
 
 describe('SidebarContent', () => {
   const user = userEvent.setup();
 
-  it('deveria renderizar o botão para criar um novo prompt', () => {
-    makeSut();
+  describe('base', () => {
+    it('deveria renderizar o botão para criar um novo prompt', () => {
+      makeSut();
 
-    expect(screen.getByRole('complementary')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Novo prompt' })).toBeVisible();
+      expect(screen.getByRole('complementary')).toBeVisible();
+      expect(screen.getByRole('button', { name: 'Novo prompt' })).toBeVisible();
+    });
+
+    it('deveria renderizar a lista de prompts', () => {
+      const input = [
+        {
+          id: '1',
+          title: 'Example 1',
+          content: 'Content 1',
+        },
+        {
+          id: '2',
+          title: 'Example 2',
+          content: 'Content 2',
+        },
+      ];
+
+      makeSut({ prompts: input });
+
+      expect(screen.getByText(initialPrompts[0].title)).toBeInTheDocument();
+
+      expect(screen.getAllByRole('paragraph')).toHaveLength(
+        initialPrompts.length
+      );
+    });
   });
 
   describe('Colapsar / Expandir', () => {

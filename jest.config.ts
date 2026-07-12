@@ -1,4 +1,4 @@
-import createJestConfig from 'next/jest';
+import createJestConfig from 'next/jest.js';
 
 const config = createJestConfig({
   dir: './',

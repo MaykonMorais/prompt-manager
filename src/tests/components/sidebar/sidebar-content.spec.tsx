@@ -57,14 +57,14 @@ describe('SidebarContent', () => {
 
       makeSut({ prompts: input });
 
-      expect(screen.getByText(initialPrompts[0].title)).toBeInTheDocument();
+      expect(screen.getByText(input[0].title)).toBeInTheDocument();
 
       expect(screen.getAllByRole('paragraph')).toHaveLength(
         initialPrompts.length
       );
     });
 
-    it.only('deveria atualizar o campo de busca ao digitar', async () => {
+    it('deveria atualizar o campo de busca ao digitar', async () => {
       const text = 'AI';
       makeSut();
 
